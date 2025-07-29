@@ -18,6 +18,7 @@ public class AddressEmbedded {
     private Long id;
     private String street;
     private String city;
+
     @OneToOne(mappedBy = "address")
     private UserEntity user;
 }

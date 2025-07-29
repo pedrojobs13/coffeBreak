@@ -1,9 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/coffee_break
-    username: pedro
-    password: 12345
+    url: jdbc:postgresql://localhost:5332/coffee_break
+    username: amigoscode
+    password: password
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8090
