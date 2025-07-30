@@ -1,6 +1,6 @@
 package com.pedrolg.coffeebreak.user.presentation;
 
-import com.pedrolg.coffeebreak.user.business.usecase.CreateUserUseCase;
+import com.pedrolg.coffeebreak.user.business.usecase.impl.CreateUserUseCase;
 import com.pedrolg.coffeebreak.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final CreateUserUseCase createUserUseCase;
-    private final UserMapper mapperUser;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> create(@RequestBody UserDto user) {
         createUserUseCase.execute(UserMapper.toModel(user));
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

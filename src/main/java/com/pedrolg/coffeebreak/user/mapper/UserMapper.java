@@ -18,6 +18,8 @@ public class UserMapper {
                 .email(userDto.getEmail())
                 .phone(userDto.getPhone())
                 .street(userDto.getStreet())
+                .accountType(userDto.getAccountType())
+                .password(userDto.getPassword())
                 .build();
     }
 
@@ -26,6 +28,8 @@ public class UserMapper {
                 .name(user.getName())
                 .email(user.getEmail())
                 .phone(user.getPhone())
+                .accountType(user.getAccountType())
+                .password(user.getPassword())
                 .address(toAddress(user))
                 .build();
     }

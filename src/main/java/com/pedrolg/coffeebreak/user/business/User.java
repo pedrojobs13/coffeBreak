@@ -15,4 +15,6 @@ public class User {
     private String phone;
     private String street;
     private String city;
+    private String password;
+    private String accountType;
 }

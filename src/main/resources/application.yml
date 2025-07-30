@@ -1,12 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5332/coffee_break
-    username: amigoscode
-    password: password
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
-server:
-  port: 8090

@@ -19,6 +19,8 @@ public class UserEntity {
     private String name;
     private String email;
     private String phone;
+    private String password;
+    private String accountType;
     @OneToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name = "address_id")
     private AddressEmbedded address;
