@@ -1,27 +1,35 @@
 package com.pedrolg.coffeebreak.login.usecase.impl;
 
-public class LoginUseCaseImpl {
-    public LoginGenerator authenticate(LoginRequest login) throws Exception {
+import com.pedrolg.coffeebreak.config.Login;
+import com.pedrolg.coffeebreak.gateway.UserGateway;
+import com.pedrolg.coffeebreak.login.model.LoginGenerator;
+import com.pedrolg.coffeebreak.login.presentation.LoginDto;
+import com.pedrolg.coffeebreak.user.business.usecase.CryptPassword;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-        var loginDetails = userRepository.findByEmail(login.username())
+@Service
+@RequiredArgsConstructor
+public class LoginUseCaseImpl {
+    private final CryptPassword cryptPassword;
+    private final UserGateway userGateway;
+
+    public LoginGenerator authenticate(LoginDto login) throws Exception {
+
+        var loginDetails = userGateway.findByEmail(login.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        boolean cb = cryptPassword.matches(login.password(), loginDetails.getPassword());
+        boolean cb = cryptPassword.matches(login.getPassword(), loginDetails.getPassword());
 
-        if (!cb) {
-            throw new PasswordAndUsernameIncorrectException();
-        }
+
         var loginResponse = Login.builder()
-                .id(loginDetails.getId().toString())
                 .email(loginDetails.getEmail())
-                .roles(List.of(Role.fromStringToEnum(loginDetails.getRoles())))
                 .build();
 
         var jwtToken = generateTokenUseCase.execute(loginResponse);
 
         return LoginGenerator.builder()
-                .userId(loginResponse.getId())
-                .expirationTime(LocalDateTime.ofInstant(generateTokenUseCase.genExpirationDate(), ZoneId.systemDefault()))
+                .email(loginResponse.getId())
                 .token(jwtToken)
                 .build();
     }
